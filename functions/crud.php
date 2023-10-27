@@ -6,7 +6,7 @@ function createUser($data) {
      * Création du'une requete SQL préparée 
      * en vue  d'une insertion 
      */
-    $query = "INSERT INTO user VALUES (NULL, ?, ?, ?)";
+    $query = "INSERT INTO user (email, password, username, role_id, billing_address_id, shipping_address_id, id) VALUES (?, ?, ?, ?, NULL,NULL, NULL)";
     
 
     /**
@@ -22,12 +22,13 @@ function createUser($data) {
          * en indiquant leur type ( s = string, i = integer)
          * en donnant la valeur des param a inserer dans la DB ($data[key])
         */
-        mysqli_stmt_bind_param($stmt, "sss",
-         $data['user_name'], $data['email'], $data['pwd']);
+        mysqli_stmt_bind_param($stmt, "sssi",
+         $data['email'], $data['password'], $data['username'], 2);
 
         /* Exécution de la requête */
         $result = mysqli_stmt_execute($stmt);
 
+        return $result;
     }
 }
 
