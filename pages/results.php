@@ -15,21 +15,22 @@ $validationData = signupValidation($_POST);
     // si ma validation est ok je passe à la suite 
     //sinon j'affiche les messages d'erreur
 
-    echo '<h2>Mon validationData</h2>';
+    
 
-    var_dump($validationData);
+   
 
     //enregistrer mon utilisateur
 if ($validationData['isValid']) {
     $data = [
         'email'=>$_POST['email'],
-        'password'=>$_POST['password'],
+        'password'=>encodePwd($_POST['password']),
         'username'=>$_POST['username'],
     ];
+    echo '<h2>Mon Data avant de creer user</h2>';
+    var_dump($data);
+    //die('Normalement ici je créerai un user');
 
-    die('Normalement ici je créerai un user');
-
-    //$result = createUser($data);
+    $result = createUser($data);
 }
     
 

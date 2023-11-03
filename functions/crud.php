@@ -1,20 +1,20 @@
 <?php
+
 function createUser($data)
 {
 
     global $conn;
 
-    $query = "INSERT INTO user (email, password, username, role_id, billing_address_id, shipping_address_id, id) VALUES (?, ?, ?, ?, NULL,NULL, NULL)";
+    $query = "INSERT INTO user (email, password, username, role_id, billing_address_id, shipping_address_id, id) VALUES (?, ?, ?, 2, NULL,NULL, NULL)";
 
     if ($stmt = mysqli_prepare($conn, $query)) {
 
         mysqli_stmt_bind_param(
             $stmt,
-            "sssi",
+            "sss",
             $data['email'],
             $data['password'],
-            $data['username'],
-            2
+            $data['username']
         );
 
         $result = mysqli_stmt_execute($stmt);

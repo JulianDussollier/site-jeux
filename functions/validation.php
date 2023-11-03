@@ -6,16 +6,23 @@ function signupValidation($data)
     //username >1 caractere
     $usernameIsValidData = usernameIsValid($data['username']);
     $error_username = $usernameIsValidData['msg'];
-
+    $isValid = $usernameIsValidData['isValid'];
 
     //email voir regex
-    $error_email = "";
+    $emailIsValidData = emailIsValid($data['email']);
+    $error_email = $emailIsValidData['msg'];
+
+    if ($isValid) {
+        $isValid = $emailIsValidData['isValid'];
+    }
+
+
     //pwd
     $error_pwd = '';
-    $validationData = pwdLenghtValidation($data['password']);
-    if (!$validationData['isValid']) {
-        $error_pwd = $validationData['msg'];
-        $isValid = $validationData['isValid'];
+    $pwdIsValidData = pwdLenghtValidation($data['password']);
+    $error_pwd = $pwdIsValidData['msg'];
+    if ($isValid) {
+        $isValid = $pwdIsValidData['isValid'];
     }
 
 
@@ -38,8 +45,6 @@ function usernameIsValid($username)
     }
     //get user by username
     $userInDB = getUserByUsername($username);
-    echo '<h2>Mon userInDB</h2>';
-    var_dump($userInDB);
 
     if ($userInDB) {
         //error exist déja 
@@ -73,23 +78,22 @@ function emailIsValid($email)
 
 function pwdLenghtValidation($pwd)
 {
-    # code...
     //minimum 8 max 16
     $length = strlen($pwd);
-    $isValidData = [
-        'isValid' => true,
-        'msg' => ''
-    ];
+
     if ($length < 8) {
-        $isValidData = [
+        return [
             'isValid' => false,
             'msg' => 'Votre mot de passe est trop court. Doit être supérieur a 8 caractères'
         ];
     } elseif ($length > 16) {
-        $isValidData = [
+        return [
             'isValid' => false,
             'msg' => 'Votre mot de passe est trop long. Doit être inférieur a 16 caractères'
         ];
     }
-    return $isValidData;
+    return [
+        'isValid' => true,
+        'msg' => ''
+    ];
 }
