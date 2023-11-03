@@ -1,7 +1,10 @@
 <h2>Page de résultat</h2>
 <?php
+require_once "../config/connexion.php";
 require_once"../functions/crud.php";
 require_once"../functions/functions.php";
+require_once"../functions/validation.php";
+echo '<h2>Mon $_POST</h2>';
 var_dump($_POST);
 
 if (isset($_POST)&& $_POST["action"]=="signup") {
@@ -12,8 +15,9 @@ $validationData = signupValidation($_POST);
     // si ma validation est ok je passe à la suite 
     //sinon j'affiche les messages d'erreur
 
-    //vérifier si déjà dans la base
+    echo '<h2>Mon validationData</h2>';
 
+    var_dump($validationData);
 
     //enregistrer mon utilisateur
 if ($validationData['isValid']) {
@@ -22,7 +26,10 @@ if ($validationData['isValid']) {
         'password'=>$_POST['password'],
         'username'=>$_POST['username'],
     ];
-    $result = createUser($data);
+
+    die('Normalement ici je créerai un user');
+
+    //$result = createUser($data);
 }
     
 
