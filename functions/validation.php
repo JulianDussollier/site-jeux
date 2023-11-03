@@ -35,12 +35,12 @@ function usernameIsValid($username)
             'isValid' => false,
             'msg' => "Votre nom d'utilisateur est trop court. il doit faire plus d'un caractère."
         ];
-    } 
+    }
     //get user by username
     $userInDB = getUserByUsername($username);
     echo '<h2>Mon userInDB</h2>';
     var_dump($userInDB);
-    
+
     if ($userInDB) {
         //error exist déja 
         return [
@@ -52,6 +52,22 @@ function usernameIsValid($username)
     return [
         'isValid' => true,
         'msg' => ''
+    ];
+}
+
+function emailIsValid($email)
+{
+
+    $email_validation_regex = "/^[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+\\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/";
+    if (!preg_match($email_validation_regex, $email)) {
+        return [
+            'isValid' => false,
+            'msg' => "Format d'email invalid",
+        ];
+    }
+    return [
+        'isValid' => true,
+        'msg' => '',
     ];
 }
 
